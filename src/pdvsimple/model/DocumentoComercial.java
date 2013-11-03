@@ -7,6 +7,7 @@ import javax.persistence.*;
 
 import org.openxava.annotations.*;
 import org.openxava.calculators.*;
+import org.openxava.jpa.*;
 
 import pdvsimple.calculators.*;
 
@@ -24,7 +25,7 @@ abstract public class DocumentoComercial extends Identificable {
 	private int ano;
 
 	@Column(length = 6)
-	@DefaultValueCalculator(value = ProximoCodigoParaAnoCalculator.class, properties = @PropertyValue(name = "ano"))
+	@ReadOnly
 	private int codigo;
 
 	@Required
@@ -133,6 +134,21 @@ abstract public class DocumentoComercial extends Identificable {
 	@Depends("subTotal, itbis")
 	public BigDecimal getTotal() {
 		return getSubTotal().add(getItbis()); // subtotal + itbis
+	}
+	
+	/* 8.20 pag 129 calcula un valor por defecto para multiples usuarios
+	 * metodo @PrePersist calculateCodigo() de DocumentoComercial
+	 */
+	@PrePersist		//ejecutado justo ante de grabar el objeto por primera vez
+	public void calculateCodigo() throws Exception {
+		// de esta forma es valido para factura y orden
+		Query query = XPersistence.getManager().createQuery(
+				"select max(i.codigo) from " +
+						getClass().getName().substring(16) +
+						" i where i.ano = :ano");
+		query.setParameter("ano", ano);
+		Integer ultimoCodigo = (Integer) query.getSingleResult();
+		this.codigo = ultimoCodigo == null ? 1 : ultimoCodigo + 1;
 	}
 
 }

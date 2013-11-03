@@ -16,7 +16,6 @@
 		</properties>
 	</persistence-unit>
 	
-	
 	<!--  JUnit PostgreSQL  -->
 	<persistence-unit name="junit">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
