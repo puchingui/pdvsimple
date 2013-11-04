@@ -51,6 +51,18 @@ abstract public class DocumentoComercial extends Identificable {
 	// @Required
 	@DefaultValueCalculator(PorcentajeItbisCalculator.class)
 	private BigDecimal porcentajeItbis;
+	
+	// Para calculos masivos de facturas 8.22 - 130
+	@Stereotype("MONEY")
+	private BigDecimal importe;
+	
+	//8.29 - 133 Formula en la base de datos
+	@org.hibernate.annotations.Formula("IMPORTE * 0.10")	//el calculo usando SQL
+	@Stereotype("MONEY")
+	private BigDecimal beneficioEstimado;
+	
+	@Transient		//no se almacena en la tabla de la base de datos
+	private boolean eliminando = false;	//indica si JPA esta borrando el documento ahora
 
 	public int getAno() {
 		return ano;
@@ -108,6 +120,19 @@ abstract public class DocumentoComercial extends Identificable {
 		this.porcentajeItbis = porcentajeItbis;
 	}
 
+	public BigDecimal getImporte() {
+		return importe;
+	}
+
+	public void setImporte(BigDecimal importe) {
+		this.importe = importe;
+	}
+
+	//8.29 - 133 solo el getter es necesario
+	public BigDecimal getBeneficioEstimado() {
+		return beneficioEstimado;
+	}
+
 	// SubTotal Propiedad calculada dependiente de una coleccion 8.11
 	@Stereotype("MONEY")
 	public BigDecimal getSubTotal() {
@@ -149,6 +174,25 @@ abstract public class DocumentoComercial extends Identificable {
 		query.setParameter("ano", ano);
 		Integer ultimoCodigo = (Integer) query.getSingleResult();
 		this.codigo = ultimoCodigo == null ? 1 : ultimoCodigo + 1;
+	}
+	
+	public void recalculaImporte() {
+		setImporte(getTotal());
+	}
+	
+	// 8.25 - 131
+	boolean isElinando() {	//acceso paquete, no es accesible desde fuera
+		return eliminando;
+	}
+	
+	@PreRemove	//cuando el documento va a ser borrado marcamos eliminando como true
+	private void marcaEliminando() {
+		this.eliminando = true;
+	}
+	
+	@PostRemove	//cuando el documento ha sido borrado marcamos eliminando como false
+	private void desmarcaEliminando() {
+		this.eliminando = false;
 	}
 
 }

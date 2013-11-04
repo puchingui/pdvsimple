@@ -73,5 +73,25 @@ public class Detalle extends Identificable {
 		// getPrecioPorUnidad en ves de producto.precio
 		return new BigDecimal(cantidad).multiply(getPrecioPorUnidad());
 	}
+	
+	//8.23 - 131
+	@PrePersist		//al grabar el detalle por primera vez
+	private void onPersist() {
+		getPadre().getDetalles().add(this);	//para tener la coleccion sincronizada
+		getPadre().recalculaImporte();
+	}
+	
+	@PreUpdate		//cada vez que el detalle se modifica
+	private void onUpdate() {
+		getPadre().recalculaImporte();
+	}
+	
+	// 8.26 - 132
+	@PreRemove		//al borrar el detalle
+	private void onRemove() {
+		if(getPadre().isElinando()) return;	//an~adimos esta linea para evitar excepciones
+		getPadre().getDetalles().remove(this);	//para tener la coleccion incronizada
+		getPadre().recalculaImporte();
+	}
 
 }
