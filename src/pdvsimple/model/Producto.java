@@ -6,6 +6,8 @@ import javax.persistence.*;
 
 import org.openxava.annotations.*;
 
+import pdvsimple.annotations.*;
+
 @Entity
 @View(name = "Simple", members = "codigo, descripcion")
 public class Producto {
@@ -31,6 +33,10 @@ public class Producto {
 	@Stereotype("MONEY")
 	// usado para almacenar dinero
 	private BigDecimal precio; // BigDecimal por lo regular es usado para dinero
+	
+	@Column(length=10)
+	@ISBN	//9.20 - 151 crear mi propia anotacion hibernate
+	private String isbn;
 
 	@Stereotype("PHOTO")
 	// el usuario puede ver y cambiar una foto
@@ -80,6 +86,14 @@ public class Producto {
 
 	public BigDecimal getPrecio() {
 		return precio;
+	}
+
+	public String getIsbn() {
+		return isbn;
+	}
+
+	public void setIsbn(String isbn) {
+		this.isbn = isbn;
 	}
 
 	public void setPrecio(BigDecimal precio) {
