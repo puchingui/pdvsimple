@@ -15,6 +15,7 @@ import pdvsimple.validators.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ISBN {	//una definicion de anotacion Java convencional
 	
+	boolean search() default true;		//para (des)activar la busqueda web al validar
 	String message() default "ISBN no existe";	//mensaje si la validacion falla
 	
 }

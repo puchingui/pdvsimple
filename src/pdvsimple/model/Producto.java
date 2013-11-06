@@ -35,7 +35,7 @@ public class Producto {
 	private BigDecimal precio; // BigDecimal por lo regular es usado para dinero
 	
 	@Column(length=10)
-	@ISBN	//9.20 - 151 crear mi propia anotacion hibernate
+	@ISBN(search=false)		//9.20 - 151 crear mi propia anotacion hibernate
 	private String isbn;
 
 	@Stereotype("PHOTO")
