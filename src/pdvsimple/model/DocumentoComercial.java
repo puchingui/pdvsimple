@@ -17,7 +17,7 @@ import pdvsimple.calculators.*;
  */
 @Entity
 @View(members = "ano, codigo, fecha; data {cliente; detalles; importes [ porcentajeItbis, subTotal, itbis, total ]; notas}")
-abstract public class DocumentoComercial extends Identificable {
+abstract public class DocumentoComercial extends Eliminable {
 
 	@Column(length = 4)
 	@DefaultValueCalculator(CurrentYearCalculator.class)

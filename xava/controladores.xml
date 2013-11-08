@@ -2,16 +2,18 @@
 <!DOCTYPE controladores SYSTEM "dtds/controladores.dtd" >
 <controladores>
   
-  <controlador nombre="Factura">
+  <controlador nombre="PDVSimple">
 	
 	<hereda-de controlador="Typical"/> 
 	
 	<!-- Typical ya tiene una accion delete, al usar el mismo nombre la sobreescribimos -->
 	<accion nombre="delete" 
 		modo="detail" confirmar="true" 
-		clase="pdvsimple.actions.EliminarFacturaAction" 
+		clase="pdvsimple.actions.PDVSimpleEliminarAction" 
 		imagen="images/delete.gif" 
-		atajo-de-teclado="Control D"/>
+		atajo-de-teclado="Control D">
+		<usa-objeto nombre="xava_view"/>
+	</accion>
   
   </controlador>
 

@@ -16,22 +16,11 @@ public class Factura extends DocumentoComercial {
 	@CollectionView("NoClienteNoFactura")
 	private Collection<Orden> ordenes;
 	
-	@Hidden
-	private boolean eliminado;		//indica si esta factura esta eliminada
-
 	public Collection<Orden> getOrdenes() {
 		return ordenes;
 	}
 
 	public void setOrdenes(Collection<Orden> ordenes) {
 		this.ordenes = ordenes;
-	}
-
-	public boolean isEliminado() {
-		return eliminado;
-	}
-
-	public void setEliminado(boolean eliminado) {
-		this.eliminado = eliminado;
 	}
 }

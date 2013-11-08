@@ -57,5 +57,10 @@ public class Orden extends DocumentoComercial {
 						"no_se_puede_eliminar_orden_con_factura"));
 		}
 	}
+	
+	public void setEliminado(boolean eliminado) {
+		if (eliminado) validateOnRemove();		//llamamos a la validacion explicitamente
+		super.setEliminado(eliminado);
+	}
 
 }
