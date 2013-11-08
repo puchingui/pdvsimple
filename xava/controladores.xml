@@ -1,20 +1,29 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!DOCTYPE controladores SYSTEM "dtds/controladores.dtd" >
 <controladores>
-  
-  <controlador nombre="PDVSimple">
+
+	<var-entorno nombre="XAVA_SEARCH_ACTION" 
+		valor="PDVSimple.busquedaExcluyendoEliminado"/>
+
+	<controlador nombre="PDVSimple">
 	
-	<hereda-de controlador="Typical"/> 
+		<hereda-de controlador="Typical"/> 
 	
-	<!-- Typical ya tiene una accion delete, al usar el mismo nombre la sobreescribimos -->
-	<accion nombre="delete" 
-		modo="detail" confirmar="true" 
-		clase="pdvsimple.actions.PDVSimpleEliminarAction" 
-		imagen="images/delete.gif" 
-		atajo-de-teclado="Control D">
-		<usa-objeto nombre="xava_view"/>
-	</accion>
+			<!-- Typical ya tiene una accion delete, al usar el mismo nombre la sobreescribimos -->
+			<accion nombre="delete" 
+				modo="detail" confirmar="true" 
+				clase="pdvsimple.actions.PDVSimpleEliminarAction" 
+				imagen="images/delete.gif" 
+				atajo-de-teclado="Control D">
+				<usa-objeto nombre="xava_view"/>
+			</accion>
+			
+			<!-- oculta="true" asi la accion no se mostrara en la barra de botones -->
+			<accion nombre="busquedaExcluyendoEliminado" 
+				oculta="true" 
+				clase="pdvsimple.actions.BusquedaExcluyendoEliminadoAction">
+			</accion>
   
-  </controlador>
+	</controlador>
 
 </controladores>

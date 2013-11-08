@@ -10,8 +10,12 @@ import org.openxava.model.*;
  * @author Javier Paniza
  *
  */
-public class PDVSimpleEliminarAction extends ViewBaseAction {
+public class PDVSimpleEliminarAction extends ViewBaseAction 
+			implements IChainAction {	//encadena con otra accion
+										//indicada en el metodo getNextAction()
 
+	private String nextAction = null;	//para guardar la siguiente accion a ejecutar
+	
 	/***
 	 * 10.10 - 169
 	 */
@@ -28,10 +32,8 @@ public class PDVSimpleEliminarAction extends ViewBaseAction {
 		if (!getView().getMetaModel()		//metadatos de la entidad actual
 			.containsMetaProperty("eliminado"))	//tiene una propiedad eliminado?
 		{
-			addMessage(
-					"No eliminado, no existe la propiedad "
-					+ "eliminado en esta entidad");
-			return;
+			nextAction = "CRUD.delete";		//"CRUD.delete" se ejecutara cuando
+			return;							//esta accion finalice
 		}
 		
 		@SuppressWarnings("rawtypes")
@@ -45,6 +47,11 @@ public class PDVSimpleEliminarAction extends ViewBaseAction {
 		addMessage("object_deleted", getModelName());
 		getView().clear();
 		getView().setEditable(false); 		//dejamos la vista como no editable
+	}
+
+	public String getNextAction() throws Exception 		//obligatorio por causa de IChainAction 
+	{
+		return nextAction;
 	}
 
 }
