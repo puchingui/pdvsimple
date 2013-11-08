@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE controladores SYSTEM "dtds/controladores.dtd" >
+<controladores>
+  
+  <controlador nombre="Factura">
+	
+	<hereda-de controlador="Typical"/> 
+	
+	<!-- Typical ya tiene una accion delete, al usar el mismo nombre la sobreescribimos -->
+	<accion nombre="delete" 
+		modo="detail" confirmar="true" 
+		clase="pdvsimple.actions.EliminarFacturaAction" 
+		imagen="images/delete.gif" 
+		atajo-de-teclado="Control D"/>
+  
+  </controlador>
+
+</controladores>

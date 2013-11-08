@@ -15,6 +15,9 @@ public class Factura extends DocumentoComercial {
 	@OneToMany(mappedBy = "factura")
 	@CollectionView("NoClienteNoFactura")
 	private Collection<Orden> ordenes;
+	
+	@Hidden
+	private boolean eliminado;		//indica si esta factura esta eliminada
 
 	public Collection<Orden> getOrdenes() {
 		return ordenes;
@@ -24,4 +27,11 @@ public class Factura extends DocumentoComercial {
 		this.ordenes = ordenes;
 	}
 
+	public boolean isEliminado() {
+		return eliminado;
+	}
+
+	public void setEliminado(boolean eliminado) {
+		this.eliminado = eliminado;
+	}
 }
