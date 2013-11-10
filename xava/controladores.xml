@@ -21,8 +21,7 @@
 			<!-- oculta="true" asi la accion no se mostrara en la barra de botones -->
 			<accion nombre="busquedaExcluyendoEliminado" 
 				oculta="true" 
-				clase="pdvsimple.actions.BusquedaExcluyendoEliminadoAction">
-			</accion>
+				clase="pdvsimple.actions.BusquedaExcluyendoEliminadoAction"/>
   
 	</controlador>
 

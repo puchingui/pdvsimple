@@ -16,6 +16,7 @@ import org.openxava.util.*;
 @Views({
 		@View(extendsView = "super.DEFAULT", members = "entregado; factura { factura }"),
 		@View(name = "NoClienteNoFactura", members = "ano, codigo, fecha; detalles; notas") })
+@Tab(baseCondition = "eliminado = false")
 public class Orden extends DocumentoComercial {
 
 	@ManyToOne

@@ -31,9 +31,9 @@ public class BusquedaExcluyendoEliminadoAction
 		if (!isEliminable()) {		//si no es 'eliminable' usamos la logica estandar
 			return super.getValuesFromView();
 		}
-		Map valores = super.getValuesFromView();
-		valores.put("eliminado", false);	//llenamos la propiedad eliminado con false
-		return valores;
+		Map values = super.getValuesFromView();
+		values.put("eliminado", false);	//llenamos la propiedad eliminado con false
+		return values;
 	}
 	
 	/***
@@ -47,22 +47,22 @@ public class BusquedaExcluyendoEliminadoAction
 		if (!isEliminable()) {		//si no es 'eliminable' ejecutamos la logica estandar
 			return super.getMemberNames();
 		}
-		Map miembros = super.getMemberNames();
-		miembros.put("eliminado", null);		//queremos obtener la propiedad eliminado,
-		return miembros;						//aunque no este en la vista
+		Map members = super.getMemberNames();
+		members.put("eliminado", null);		//queremos obtener la propiedad eliminado,
+		return members;						//aunque no este en la vista
 	}
 	
 	/***
 	 * asigna los valores desde la entidad a la vista
 	 */
-	protected void setValuesToView(Map valores) throws Exception {
+	protected void setValuesToView(Map values) throws Exception {
 		/* si tiene una propiedad eliminado y vale true lanzamos la misma 
 		 * excepcion que OpenXava lanza cuando el objeto no se encuentra */
-		if (isEliminable() && (Boolean) valores.get("eliminado")) {
+		if (isEliminable() && (Boolean) values.get("eliminado")) {
 			throw new ObjectNotFoundException();
 		}
 		else {
-			super.setValuesToView(valores); 	//en caso contrario usamos la logica estandar
+			super.setValuesToView(values); 	//en caso contrario usamos la logica estandar
 		}
 	}
 		

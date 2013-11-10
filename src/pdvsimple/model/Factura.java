@@ -10,6 +10,7 @@ import org.openxava.annotations.*;
 @Views({
 		@View(extendsView = "super.DEFAULT", members = "ordenes { ordenes }"),
 		@View(name = "NoClienteNoOrdenes", members = "ano, codigo, fecha; detalles; notas") })
+@Tab(baseCondition = "eliminado = false")
 public class Factura extends DocumentoComercial {
 
 	@OneToMany(mappedBy = "factura")
