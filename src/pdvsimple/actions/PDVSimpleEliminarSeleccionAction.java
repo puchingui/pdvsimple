@@ -17,6 +17,7 @@ import org.openxava.validators.*;
 public class PDVSimpleEliminarSeleccionAction extends TabBaseAction implements IChainAction 
 {
 	private String nextAction = null;		//para almacenar la siguiente accion
+	private boolean restaurar;				//una nueva propiedad restaurar
 	
 	public void execute() throws Exception {
 		if (!getMetaModel().containsMetaProperty("eliminado")) {
@@ -49,7 +50,8 @@ public class PDVSimpleEliminarSeleccionAction extends TabBaseAction implements I
 	@SuppressWarnings("deprecation")
 	private void markSelectedEntitiesAsDeleted() throws Exception {
 		Map values = new HashMap();		//valores a asignar a cada entidad para marcarla
-		values.put("eliminado", true);	//pone eliminado a true
+		values.put("eliminado", !isRestaurar());	//10.28 en lugar de un true fijo, usamos
+												//el valor de la propiedad restaurar
 		for (int row : getSelected()) {	//itera sobre todas las filas seleccionadas
 			Map key = (Map) getTab().getTableModel().getObjectAt(row);
 			try {		//seleccionadas. obtenemos la clave de cada entidad
@@ -68,5 +70,13 @@ public class PDVSimpleEliminarSeleccionAction extends TabBaseAction implements I
 		}
 		getTab().deselectAll(); 	//despues de borrar deseleccionamos las filas
 		resetDescriptionsCache();	//y reiniciamos el cache de los combos para este usuario
+	}
+
+	public boolean isRestaurar() {
+		return restaurar;
+	}
+
+	public void setRestaurar(boolean restaurar) {
+		this.restaurar = restaurar;
 	}
 }

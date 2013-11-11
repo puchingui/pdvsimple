@@ -16,7 +16,10 @@ import org.openxava.util.*;
 @Views({
 		@View(extendsView = "super.DEFAULT", members = "entregado; factura { factura }"),
 		@View(name = "NoClienteNoFactura", members = "ano, codigo, fecha; detalles; notas") })
-@Tab(baseCondition = "eliminado = false")
+@Tabs({			//10.32 - 186 @Tabs es para definir varios tabs para la misma entidad
+	@Tab(baseCondition = "eliminado = false"),		//Tab sin nombre, es el predeterminado
+	@Tab(name="Eliminado", baseCondition = "eliminado = true")	//Tab con nombre
+})
 public class Orden extends DocumentoComercial {
 
 	@ManyToOne

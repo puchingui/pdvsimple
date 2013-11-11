@@ -33,5 +33,14 @@
 				en-cada-fila="true"/>
   
 	</controlador>
+	
+	<controlador nombre="Zafacon">
+		<accion nombre="restaurar" modo="list" 
+			clase="pdvsimple.actions.PDVSimpleEliminarSeleccionAction">
+			<!-- pone la propiedad restaurar a true antes de llamar 
+			al metodo excetute() de la accion -->
+			<poner propiedad="restaurar" valor="true"/>
+		</accion>
+	</controlador>
 
 </controladores>
