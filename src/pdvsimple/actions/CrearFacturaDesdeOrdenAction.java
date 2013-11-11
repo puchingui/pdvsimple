@@ -12,7 +12,10 @@ import pdvsimple.model.*;
  *
  */
 public class CrearFacturaDesdeOrdenAction extends ViewBaseAction	//para usar getView()
+				implements IHideActionAction
 {
+	
+	private boolean ocultarAccion = false;		//11.16 - 204 para ocultar una accion
 
 	public void execute() throws Exception {
 		Object oid = getView().getValue("oid");
@@ -31,6 +34,11 @@ public class CrearFacturaDesdeOrdenAction extends ViewBaseAction	//para usar get
 		getView().refresh(); 		//para ver la factura creada en la pestan~a 'Factura'
 		addMessage("factura_creada_desde_orden",	//mensaje de confirmacion
 				orden.getFactura());
+		ocultarAccion = true;	//todo a funcionado a la perfeccion, asi que ocultamos la accion
+	}
+
+	public String getActionToHide() {
+		return ocultarAccion ? "PDVSimple.crearFactura" : null;
 	}
 
 }
