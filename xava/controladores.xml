@@ -31,9 +31,14 @@
 				clase="pdvsimple.actions.PDVSimpleEliminarSeleccionAction" 
 				imagen="images/delete.gif" 
 				en-cada-fila="true"/>
+				
+			<!-- 11.1.1 - 195 Controlador para crear una factura desde Orden -->
+			<accion nombre="crearFactura" modo="detail" 
+				clase="pdvsimple.actions.CrearFacturaDesdeOrdenAction"/>
   
 	</controlador>
 	
+	<!-- 10.4.1 - 183 Definicion de la papelera -->
 	<controlador nombre="Zafacon">
 		<accion nombre="restaurar" modo="list" 
 			clase="pdvsimple.actions.PDVSimpleEliminarSeleccionAction">

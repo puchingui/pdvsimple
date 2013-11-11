@@ -194,5 +194,9 @@ abstract public class DocumentoComercial extends Eliminable {
 	private void desmarcaEliminando() {
 		this.eliminando = false;
 	}
+	
+	public String toString() {
+		return ano + "/" + codigo;
+	}
 
 }
