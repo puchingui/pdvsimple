@@ -22,6 +22,15 @@
 			<accion nombre="busquedaExcluyendoEliminado" 
 				oculta="true" 
 				clase="pdvsimple.actions.BusquedaExcluyendoEliminadoAction"/>
+				
+			<accion nombre="deleteSelected" modo="list" confirmar="true" 
+				clase="pdvsimple.actions.PDVSimpleEliminarSeleccionAction" 
+				atajo-de-teclado="Control D"/>
+				
+			<accion nombre="deleteRow" modo="NONE" confirmar="true" 
+				clase="pdvsimple.actions.PDVSimpleEliminarSeleccionAction" 
+				imagen="images/delete.gif" 
+				en-cada-fila="true"/>
   
 	</controlador>
 
