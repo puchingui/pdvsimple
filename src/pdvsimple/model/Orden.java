@@ -11,6 +11,8 @@ import org.openxava.jpa.*;
 import org.openxava.util.*;
 import org.openxava.validators.*;
 
+import pdvsimple.actions.*;
+
 /***
  * Antes de facturar una orden la orden debe estar entregada
  * @author
@@ -29,12 +31,14 @@ public class Orden extends DocumentoComercial {
 
 	@ManyToOne
 	@ReferenceView("NoClienteNoOrdenes")
+	//@OnChange(MuestraOcultaCrearFacturaAction.class)	//11.13 - 202
 	private Factura factura;
 	
 	/* 9.1 - 142 delivered como alternativas de validacion
 	 * Un usuario no puede asignar pedidos a una factura 
 	 * si los pedidos no han sido entregados
 	 */
+	@OnChange(MuestraOcultaCrearFacturaAction.class)	//11.13 - 202
 	private boolean entregado;
 
 	public Factura getFactura() {
