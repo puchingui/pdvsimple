@@ -2,13 +2,28 @@ package pdvsimple.actions;
 
 import org.openxava.actions.*;
 import org.openxava.jpa.*;
+import org.openxava.model.*;
 
 import pdvsimple.model.*;
 
+/***
+ * 11.11 - 201 Validacion desde la accion para preguntar por el estado de la vista
+ * @author Javier Paniza
+ *
+ */
 public class CrearFacturaDesdeOrdenAction extends ViewBaseAction	//para usar getView()
 {
 
 	public void execute() throws Exception {
+		Object oid = getView().getValue("oid");
+		//si el oid es nulo el pedido actual no se ha grabado todavia
+		if (oid == null) {
+			addError("imposible_crear_factura_orden_no_existe");
+			return;
+		}
+		MapFacade.setValues("Orden",		//11.11 - 201 si el pedido existe lo grabamos (2)
+				getView().getKeyValues(),
+				getView().getValues());
 		Orden orden = XPersistence.getManager().find(	//usamos JPA para obtener
 				Orden.class,							//entidad Orden visualizada en la vista
 				getView().getValue("oid"));
