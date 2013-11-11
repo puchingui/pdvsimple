@@ -8,11 +8,14 @@ import org.openxava.actions.*;
 
 /***
  * 10.22 - 178 Busqueda que excluye los objetos marcados como borrados
+ * extends SearchExecutingOnChangeAction se cambio de SearchByViewkeyAction que es el estandar
+ * 11.15 - 204 porque SearchExecutingOnChangeAction ejecuta automaticamente los eventos OnChange
+ * mayores detalles en el cuadro 11.15 pagina 204
  * @author Javier Paniza
  *
  */
 public class BusquedaExcluyendoEliminadoAction 
-			extends SearchByViewKeyAction		//accion estandar de OpenXava para buscar
+			extends SearchExecutingOnChangeAction
 {
 	/***
 	 * pregunta si la entidad tiene una propiedad eliminado
