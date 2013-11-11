@@ -9,6 +9,7 @@ import org.hibernate.validator.*;
 import org.openxava.annotations.*;
 import org.openxava.jpa.*;
 import org.openxava.util.*;
+import org.openxava.validators.*;
 
 /***
  * Antes de facturar una orden la orden debe estar entregada
@@ -73,17 +74,32 @@ public class Orden extends DocumentoComercial {
 	
 	/***
 	 * cuadro 11.5 - 197
-	 * @throws Exception para tener un codigo mas simple de momento
+	 * @throws ValidationException una excepcion de aplicacion (1)
 	 */
-	public void crearFactura() throws Exception {
-		Factura factura = new Factura();	//instancia una nueva factura
-		BeanUtils.copyProperties(factura, this); 	//y copia el estado del pedido actual
-		factura.setOid(null); 	//para que JPA sepa que esta entidad todavia no existe
-		factura.setFecha(new Date());
-		factura.setDetalles(new ArrayList());	//borra la coleccion de detalles
-		XPersistence.getManager().persist(factura);
-		copiaDetallesAFactura(factura);		//rellena la coleccion de detalles
-		this.factura = factura;		//siempre despues de persist()
+	public void crearFactura() throws ValidationException	
+	{
+		if (this.factura != null) {			//si ya tiene factura no podemos crearla
+			throw new ValidationException(	//admite un id de i18n como argumento
+					"imposible_crear_factura_orden_ya_tiene_factura");
+		}
+		if (!isEntregado()) {		//si el pedido no eta entregado no podemo crear la factura
+			throw new ValidationException(
+					"imposible_crear_factura_si_orden_no_entregada");
+		}
+		try {
+			Factura factura = new Factura();	//instancia una nueva factura
+			BeanUtils.copyProperties(factura, this); 	//y copia el estado del pedido actual
+			factura.setOid(null); 	//para que JPA sepa que esta entidad todavia no existe
+			factura.setFecha(new Date());
+			factura.setDetalles(new ArrayList());	//borra la coleccion de detalles
+			XPersistence.getManager().persist(factura);
+			copiaDetallesAFactura(factura);		//rellena la coleccion de detalles
+			this.factura = factura;		//siempre despues de persist()
+		} 
+		catch (Exception ex) {		//cualquier excepcion inesperada (2)
+			throw new SystemException(		//se lanza una excepcion runtime (3)
+					"imposible_crear_factura", ex);
+		}
 	}
 	
 	/***
