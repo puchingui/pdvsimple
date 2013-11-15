@@ -46,6 +46,12 @@
 			<accion nombre="crearFacturaDesdeOrdenesSeleccionadas" 
 				modo="list" 
 				clase="pdvsimple.actions.CrearFacturaDesdeOrdenesSeleccionadasAction"/>
+			
+			<!-- 12.4 - 229 Accion para buscar las facturas de un cliente desde orden-->	
+			<accion nombre="buscarFactura" 
+				clase="pdvsimple.actions.BuscarFacturaDesdeOrdenAction"
+				oculta="true"
+				imagen="images/search.gif"/>
 				
 	</controlador>
 	

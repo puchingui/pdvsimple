@@ -32,6 +32,8 @@ public class Orden extends DocumentoComercial {
 	@ManyToOne
 	@ReferenceView("NoClienteNoOrdenes")
 	//@OnChange(MuestraOcultaCrearFacturaAction.class)	//11.13 - 202
+	@OnChangeSearch(OnChangeSearchFacturaAction.class)	//12.7 - 232
+	@SearchAction("Orden.buscarFactura")	//define nuestra accion para buscar facturas
 	private Factura factura;
 	
 	/* 9.1 - 142 delivered como alternativas de validacion
@@ -60,6 +62,12 @@ public class Orden extends DocumentoComercial {
 	@AssertTrue		//antes de grabar confirma que el metodo devuelve true, si no lanza una excepcion
 	private boolean isEntregadoParaSerFacturado() {
 		return factura == null || isEntregado();	//la logica de validacion
+	}
+	
+	@AssertTrue		//12.1 - 227 el cliente de la factura debe ser el mismo de la orden
+	private boolean isClienteDeFacturaDebeSerIgual() {
+		return factura == null ||		//factura es opcional
+				factura.getCliente().getCodigo() == getCliente().getCodigo();
 	}
 	
 	@PreRemove		//justo antes de borrar la entidad

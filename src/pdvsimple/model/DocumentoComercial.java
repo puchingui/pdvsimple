@@ -19,11 +19,13 @@ import pdvsimple.calculators.*;
 @View(members = "ano, codigo, fecha; data {cliente; detalles; importes [ porcentajeItbis, subTotal, itbis, total ]; notas}")
 abstract public class DocumentoComercial extends Eliminable {
 
+	@SearchKey		//12.6 - 231
 	@Column(length = 4)
 	@DefaultValueCalculator(CurrentYearCalculator.class)
 	// an~o actual
 	private int ano;
 
+	@SearchKey
 	@Column(length = 6)
 	@ReadOnly
 	private int codigo;
