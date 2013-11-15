@@ -24,7 +24,10 @@ import pdvsimple.actions.*;
 		@View(extendsView = "super.DEFAULT", members = "entregado; factura { factura }"),
 		@View(name = "NoClienteNoFactura", members = "ano, codigo, fecha; detalles; notas") })
 @Tabs({			//10.32 - 186 @Tabs es para definir varios tabs para la misma entidad
-	@Tab(baseCondition = "eliminado = false"),		//Tab sin nombre, es el predeterminado
+	@Tab(baseCondition = "eliminado = false",				//Tab sin nombre, es el predeterminado
+			properties="ano, codigo, fecha, cliente.codigo, cliente.nombre, " +
+						"entregado, beneficioEstimado, subTotal, " +
+						"itbis, total, notas"),
 	@Tab(name="Eliminado", baseCondition = "eliminado = true")	//Tab con nombre
 })
 public class Orden extends DocumentoComercial {
@@ -133,6 +136,13 @@ public class Orden extends DocumentoComercial {
 			throw new SystemException(		//en una excepcion runtime
 					"imposible_copiar_detalles_a_factura", ex);
 		}
+	}
+	
+	/***
+	 * 12.17 - 240
+	 */
+	public void copiaDetallesAFactura() {
+		copiaDetallesAFactura(getFactura());	//delegamos en un metodo ya existente
 	}
 
 }

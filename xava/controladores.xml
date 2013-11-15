@@ -55,6 +55,26 @@
 				
 	</controlador>
 	
+	<controlador nombre="Factura">
+		<hereda-de controlador="PDVSimple"/>
+		
+		<accion nombre="agregarOrdenes" 
+			clase="pdvsimple.actions.IrAgregarOrdenesAFacturaAction" 
+			oculta="true" 
+			imagen="images/create_new.gif"/>
+		
+	</controlador>
+	
+	<!-- 12.15 - 238 Controlador peronalizado para an~adir pedidos a la factura -->
+	<controlador nombre="AgregarOrdenesAFactura">
+		<hereda-de controlador="AddToCollection"/> 	<!-- Extiende del controlador estandar -->
+		
+		<!-- Sobrescribe la accion para an~adir -->
+		<accion nombre="add" 
+			clase="pdvsimple.actions.AgregarOrdenesAFactura"/>
+		
+	</controlador>
+	
 	<!-- 10.4.1 - 183 Definicion de la papelera -->
 	<controlador nombre="Zafacon">
 		<accion nombre="restaurar" modo="list" 

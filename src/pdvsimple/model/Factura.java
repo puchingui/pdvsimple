@@ -22,6 +22,7 @@ public class Factura extends DocumentoComercial {
 
 	@OneToMany(mappedBy = "factura")
 	@CollectionView("NoClienteNoFactura")
+	@NewAction("Factura.agregarOrdenes")	//12.11 - 236 define nuestra propia accion para an~adir pedidos
 	private Collection<Orden> ordenes;
 	
 	public Collection<Orden> getOrdenes() {
