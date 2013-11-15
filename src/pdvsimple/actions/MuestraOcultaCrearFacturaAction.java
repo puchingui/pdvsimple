@@ -40,14 +40,14 @@ public class MuestraOcultaCrearFacturaAction extends OnChangePropertyBaseAction
 	 * obligatorio por causa de IShowActionAction
 	 */
 	public String getActionToShow() {
-		return mostrar ? "PDVSimple.crearFactura" : "";	//la accion a mostrar (3)
+		return mostrar ? "Orden.crearFactura" : "";	//la accion a mostrar (3)
 	}
 
 	/***
 	 * obligatorio por causa de IHideActionAction
 	 */
 	public String getActionToHide() {
-		return !mostrar ? "PDVSimple.crearFactura" : "";//la accion a ocultar (3)
+		return !mostrar ? "Orden.crearFactura" : "";//la accion a ocultar (3)
 	}
 
 }

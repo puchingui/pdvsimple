@@ -38,7 +38,7 @@ public class CrearFacturaDesdeOrdenAction extends ViewBaseAction	//para usar get
 	}
 
 	public String getActionToHide() {
-		return ocultarAccion ? "PDVSimple.crearFactura" : null;
+		return ocultarAccion ? "Orden.crearFactura" : null;
 	}
 
 }

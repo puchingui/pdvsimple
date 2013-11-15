@@ -95,7 +95,7 @@ public class Orden extends DocumentoComercial {
 			BeanUtils.copyProperties(factura, this); 	//y copia el estado del pedido actual
 			factura.setOid(null); 	//para que JPA sepa que esta entidad todavia no existe
 			factura.setFecha(new Date());
-			factura.setDetalles(new ArrayList());	//borra la coleccion de detalles
+			factura.setDetalles(new ArrayList<Detalle>());	//borra la coleccion de detalles
 			XPersistence.getManager().persist(factura);
 			copiaDetallesAFactura(factura);		//rellena la coleccion de detalles
 			this.factura = factura;		//siempre despues de persist()
@@ -111,13 +111,19 @@ public class Orden extends DocumentoComercial {
 	 * @param factura
 	 * @throws Exception
 	 */
-	private void copiaDetallesAFactura(Factura factura) throws Exception {
-		for (Detalle detalleOrden : getDetalles()) {	//itera por los detalles del pedido actual
-			Detalle detalleFactura =		//clona el detalle (1) 
-					(Detalle) BeanUtils.cloneBean(detalleOrden);
-			detalleFactura.setOid(null); 	//para ser grabada como una nueva entidad (2)
-			detalleFactura.setPadre(factura); 	//el punto clave: poner un nuevo padre (3)
-			XPersistence.getManager().persist(detalleFactura); 	//(4)
+	public void copiaDetallesAFactura(Factura factura) {
+		try {
+			for (Detalle detalleOrden : getDetalles()) {	//itera por los detalles del pedido actual
+				Detalle detalleFactura =		//clona el detalle (1) 
+						(Detalle) BeanUtils.cloneBean(detalleOrden);
+				detalleFactura.setOid(null); 	//para ser grabada como una nueva entidad (2)
+				detalleFactura.setPadre(factura); 	//el punto clave: poner un nuevo padre (3)
+				XPersistence.getManager().persist(detalleFactura); 	//(4)
+			}
+		}
+		catch (Exception ex) {		//asi convertimos cualquier excepcion
+			throw new SystemException(		//en una excepcion runtime
+					"imposible_copiar_detalles_a_factura", ex);
 		}
 	}
 

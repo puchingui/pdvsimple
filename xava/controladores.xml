@@ -31,11 +31,22 @@
 				clase="pdvsimple.actions.PDVSimpleEliminarSeleccionAction" 
 				imagen="images/delete.gif" 
 				en-cada-fila="true"/>
-				
-			<!-- 11.1.1 - 195 Controlador para crear una factura desde Orden -->
-			<accion nombre="crearFactura" modo="detail" 
-				clase="pdvsimple.actions.CrearFacturaDesdeOrdenAction"/>
   
+	</controlador>
+	
+	<controlador nombre="Orden">
+		<!-- 11.1 - 195 Para tener las acciones estandar -->
+		<hereda-de controlador="PDVSimple"/>
+		
+			<!-- 11.1.1 - 195 Controlador para crear una factura desde Orden -->
+			<accion nombre="crearFactura" 
+				modo="detail" 
+				clase="pdvsimple.actions.CrearFacturaDesdeOrdenAction"/>
+				
+			<accion nombre="crearFacturaDesdeOrdenesSeleccionadas" 
+				modo="list" 
+				clase="pdvsimple.actions.CrearFacturaDesdeOrdenesSeleccionadasAction"/>
+				
 	</controlador>
 	
 	<!-- 10.4.1 - 183 Definicion de la papelera -->
@@ -47,5 +58,28 @@
 			<poner propiedad="restaurar" valor="true"/>
 		</accion>
 	</controlador>
+	
+	<!-- 11.25 - 211 controlador para editar una factura -->
+	<controlador nombre="EditarFacturaActual">
+	
+		<accion nombre="grabar" 
+			clase="pdvsimple.actions.GrabarFacturaAction" 
+			atajo-de-teclado="Control S"/>
+		
+		<accion nombre="regresar" 
+			clase="org.openxava.actions.ReturnPreviousModuleAction"/>
+			
+		<!-- 11.31 se inicia automaticamente al cargar el modulo y sin boton que mostrar -->
+		<accion nombre="cargar" 
+			clase="pdvsimple.actions.CargarFacturaActualAction" 
+		 	oculta="true" 
+			al-iniciar="true" />
+		
+	</controlador>
+	
+	<!-- 11.25 - 213 Objeto de sesion con ambito global -->
+	<objeto nombre="pdvsimple_ClaveFacturaActual" 
+		clase="java.util.Map"
+		ambito="global"/>
 
 </controladores>

@@ -5,6 +5,7 @@ import java.util.*;
 import javax.persistence.*;
 
 import org.openxava.annotations.*;
+import org.openxava.validators.*;
 
 @Entity
 @Views({
@@ -26,5 +27,26 @@ public class Factura extends DocumentoComercial {
 
 	public void setOrdenes(Collection<Orden> ordenes) {
 		this.ordenes = ordenes;
+	}
+	
+	public static Factura crearFacturaDesdeOrdenes(Collection<Orden> ordenes) 
+				throws ValidationException
+	{
+		Factura factura = null;
+		for (Orden orden : ordenes) {
+			if (factura == null) {		//la primera vez, el primer pedido
+				orden.crearFactura();	//reutilizamos la logica para
+										//crear una factura a partir de un pedido
+				factura = orden.getFactura();	//y cogemos la factura recien creada
+			}
+			else {		//para el resto de los pedidos la factura ya esta creada
+				orden.setFactura(factura); 		//asigna la factura
+				orden.copiaDetallesAFactura(factura );
+			}
+		}
+		if (factura == null) {		//si no hay pedidos
+			throw new ValidationException("imposible_crear_factura_orden_no_especificada");
+		}
+		return factura;
 	}
 }
