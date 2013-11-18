@@ -103,6 +103,21 @@
 		
 	</controlador>
 	
+	<!-- 13.6 - 273 -->
+	<controlador nombre="OrdenesCliente">
+	
+		<accion nombre="new" 
+			clase="pdvsimple.actions.NuevaOrdenParaUsuarioActualAction" 
+			imagen="images/new.gif" 
+			atajo-de-teclado="Control N"/>
+			
+		<accion nombre="save" modo="detail"
+			clase="org.openxava.actions.SaveAction" 
+			imagen="images/save.gif" 
+			atajo-de-teclado="Control S"/>
+	
+	</controlador>
+	
 	<!-- 11.25 - 213 Objeto de sesion con ambito global -->
 	<objeto nombre="pdvsimple_ClaveFacturaActual" 
 		clase="java.util.Map"

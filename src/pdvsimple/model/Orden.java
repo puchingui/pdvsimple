@@ -7,6 +7,7 @@ import javax.persistence.*;
 import org.apache.commons.beanutils.*;
 import org.hibernate.validator.*;
 import org.openxava.annotations.*;
+import org.openxava.filters.*;
 import org.openxava.jpa.*;
 import org.openxava.util.*;
 import org.openxava.validators.*;
@@ -15,7 +16,7 @@ import pdvsimple.actions.*;
 
 /***
  * Antes de facturar una orden la orden debe estar entregada
- * @author
+ * @author Javier Paniza
  * 
  */
 
@@ -28,8 +29,12 @@ import pdvsimple.actions.*;
 			properties="ano, codigo, fecha, cliente.codigo, cliente.nombre, " +
 						"entregado, beneficioEstimado, subTotal, " +
 						"itbis, total, notas"),
-	@Tab(name="Eliminado", baseCondition = "eliminado = true")	//Tab con nombre
-})
+	@Tab(name="Eliminado", baseCondition = "eliminado = true"),	//Tab con nombre
+	/*@Tab(name="ClienteActual",		//13.6.4 - 270 Limitar visibilidad de los datos en el modo lista 
+		baseCondition="cast (${cliente.codigo} as varchar ) = ?", filter=UserFilter.class, 
+		properties="ano, codigo, fecha, cliente.codigo, cliente.nombre, entregado, importe, itbis, total")
+	*/	 
+	})
 public class Orden extends DocumentoComercial {
 
 	@ManyToOne
